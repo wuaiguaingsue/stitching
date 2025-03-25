@@ -27,6 +27,7 @@ from stitching.warper import Warper
 
 
 def create_parser():
+    # 创建命令行参数解析器
     parser = argparse.ArgumentParser(prog="stitch.py")
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument("images", nargs="+", help="Files to stitch", type=str)
@@ -298,11 +299,12 @@ __doc__ += "\n" + create_parser().format_help()
 
 
 def main():
+    # 主函数，解析命令行参数并执行图像拼接
     parser = create_parser()
     args = parser.parse_args(sys.argv[1:])
     args_dict = vars(args)
 
-    # Extract In- and Output
+    # 提取输入和输出参数
     images = Images.resolve_wildcards(args_dict.pop("images"))
     feature_masks = Images.resolve_wildcards(args_dict.pop("feature_masks"))
 
@@ -312,7 +314,7 @@ def main():
     output = args_dict.pop("output")
     output_params = args_dict.pop("output_params")
 
-    # Create Stitcher
+    # 创建拼接器
     affine_mode = args_dict.pop("affine")
 
     if affine_mode:
